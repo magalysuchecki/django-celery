@@ -1,0 +1,16 @@
+name: djcelery
+
+services:
+
+  django:
+    container_name: django
+    build: ./djcelery
+    command: python manage.py runserver 0.0.0.0:7000
+    volumes:
+      - ./djcelery:/usr/src/app/
+    ports:
+      - 7000:7000
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=django-insecure-e8n5kt-2(%us!@ws^a@(uh-c92=gl#a#*5+_4)ac@mo$_!c*8e
+      - ALLOWED_HOSTS=127.0.0.1,localhost
