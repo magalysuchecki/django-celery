@@ -2,9 +2,13 @@ name: djcelery
 
 services:
 
+  redis: 
+    image: redis:7.0.11-alpine
+
   django:
     container_name: django
-    build: ./djcelery
+    build: 
+      context: ./djcelery
     command: python manage.py runserver 0.0.0.0:7000
     volumes:
       - ./djcelery:/usr/src/app/
@@ -14,3 +18,19 @@ services:
       - DEBUG=1
       - SECRET_KEY=django-insecure-e8n5kt-2(%us!@ws^a@(uh-c92=gl#a#*5+_4)ac@mo$_!c*8e
       - ALLOWED_HOSTS=127.0.0.1,localhost
+    depends_on:
+      - redis 
+
+  celery:
+      container_name: celery
+      build: 
+        context: ./djcelery
+      command: celery --app=djcelery worker -l INFO
+      volumes:
+        - ./djcelery:/usr/src/app/
+      environment:
+        - DEBUG=1
+        - SECRET_KEY=django-insecure-e8n5kt-2(%us!@ws^a@(uh-c92=gl#a#*5+_4)ac@mo$_!c*8e
+        - ALLOWED_HOSTS=127.0.0.1,localhost
+      depends_on:
+        - redis 
