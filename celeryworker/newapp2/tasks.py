@@ -2,10 +2,10 @@ from celery import shared_task
 
 
 @shared_task
-def task1():
+def sharedtask1():
     return
 
 
 @shared_task
-def task2():
+def sharedtask2():
     return
