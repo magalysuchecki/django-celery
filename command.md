@@ -18,3 +18,11 @@ tp0.delay()
 tp1.delay()
 tp2.delay()
 tp3.delay()
+
+from djcelery.celery import t1, t2, t3
+t2.apply_async(priority=5)
+t1.apply_async(priority=6)
+t3.apply_async(priority=9)
+t2.apply_async(priority=5)
+t1.apply_async(priority=6)
+t3.apply_async(priority=9)
